@@ -1,0 +1,15 @@
+/home/user/ai training 2/backend/src/main/java/com/example/demo/repository/UserRepository.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/security/JwtUtil.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/model/User.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/security/SecurityConfig.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/security/JwtAuthFilter.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/controller/AuthController.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/repository/AuthenticationRepository.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/service/UserService.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/model/Address.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/model/Geo.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/controller/UserController.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/model/Company.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/BackendApplication.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/service/AuthService.java
+/home/user/ai training 2/backend/src/main/java/com/example/demo/model/Authentication.java

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1-create-geo-address-company-app_user" author="copilot">
+        <createTable tableName="geo">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lat" type="VARCHAR(32)"/>
+            <column name="lng" type="VARCHAR(32)"/>
+        </createTable>
+        <createTable tableName="address">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="suite" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="zipcode" type="VARCHAR(20)"/>
+            <column name="geo_id" type="INTEGER"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="address" baseColumnNames="geo_id"
+                                 referencedTableName="geo" referencedColumnNames="id"
+                                 constraintName="fk_address_geo"/>
+        <createTable tableName="company">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="catch_phrase" type="VARCHAR(255)"/>
+            <column name="bs" type="VARCHAR(255)"/>
+        </createTable>
+        <createTable tableName="app_user">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="address_id" type="INTEGER"/>
+            <column name="phone" type="VARCHAR(50)"/>
+            <column name="website" type="VARCHAR(255)"/>
+            <column name="company_id" type="INTEGER"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="app_user" baseColumnNames="address_id"
+                                 referencedTableName="address" referencedColumnNames="id"
+                                 constraintName="fk_app_user_address"/>
+        <addForeignKeyConstraint baseTableName="app_user" baseColumnNames="company_id"
+                                 referencedTableName="company" referencedColumnNames="id"
+                                 constraintName="fk_app_user_company"/>
+    </changeSet>
+
+    <changeSet id="2-create-authentication" author="copilot">
+        <createTable tableName="authentication">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3-seed-geo-address-company-app_user" author="copilot">
+        <!-- geo -->
+        <insert tableName="geo">
+            <column name="id" valueNumeric="1"/>
+            <column name="lat" value="-37.3159"/>
+            <column name="lng" value="81.1496"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="2"/>
+            <column name="lat" value="-43.9509"/>
+            <column name="lng" value="-34.4618"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="3"/>
+            <column name="lat" value="-68.6102"/>
+            <column name="lng" value="-47.0653"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="4"/>
+            <column name="lat" value="29.4572"/>
+            <column name="lng" value="-164.2990"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="5"/>
+            <column name="lat" value="-31.8129"/>
+            <column name="lng" value="62.5342"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="6"/>
+            <column name="lat" value="-71.4197"/>
+            <column name="lng" value="71.7478"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="7"/>
+            <column name="lat" value="24.8918"/>
+            <column name="lng" value="21.8984"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="8"/>
+            <column name="lat" value="-14.3990"/>
+            <column name="lng" value="-120.7677"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="9"/>
+            <column name="lat" value="24.6463"/>
+            <column name="lng" value="-168.8889"/>
+        </insert>
+        <insert tableName="geo">
+            <column name="id" valueNumeric="10"/>
+            <column name="lat" value="-38.2386"/>
+            <column name="lng" value="57.2232"/>
+        </insert>
+        <!-- address -->
+        <insert tableName="address">
+            <column name="id" valueNumeric="1"/>
+            <column name="street" value="Kulas Light"/>
+            <column name="suite" value="Apt. 556"/>
+            <column name="city" value="Gwenborough"/>
+            <column name="zipcode" value="92998-3874"/>
+            <column name="geo_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="2"/>
+            <column name="street" value="Victor Plains"/>
+            <column name="suite" value="Suite 879"/>
+            <column name="city" value="Wisokyburgh"/>
+            <column name="zipcode" value="90566-7771"/>
+            <column name="geo_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="3"/>
+            <column name="street" value="Douglas Extension"/>
+            <column name="suite" value="Suite 847"/>
+            <column name="city" value="McKenziehaven"/>
+            <column name="zipcode" value="59590-4157"/>
+            <column name="geo_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="4"/>
+            <column name="street" value="Hoeger Mall"/>
+            <column name="suite" value="Apt. 692"/>
+            <column name="city" value="South Elvis"/>
+            <column name="zipcode" value="53919-4257"/>
+            <column name="geo_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="5"/>
+            <column name="street" value="Skiles Walks"/>
+            <column name="suite" value="Suite 351"/>
+            <column name="city" value="Roscoeview"/>
+            <column name="zipcode" value="33263"/>
+            <column name="geo_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="6"/>
+            <column name="street" value="Norberto Crossing"/>
+            <column name="suite" value="Apt. 950"/>
+            <column name="city" value="South Christy"/>
+            <column name="zipcode" value="23505-1337"/>
+            <column name="geo_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="7"/>
+            <column name="street" value="Rex Trail"/>
+            <column name="suite" value="Suite 280"/>
+            <column name="city" value="Howemouth"/>
+            <column name="zipcode" value="58804-1099"/>
+            <column name="geo_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="8"/>
+            <column name="street" value="Ellsworth Summit"/>
+            <column name="suite" value="Suite 729"/>
+            <column name="city" value="Aliyaview"/>
+            <column name="zipcode" value="45169"/>
+            <column name="geo_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="9"/>
+            <column name="street" value="Dayna Park"/>
+            <column name="suite" value="Suite 449"/>
+            <column name="city" value="Bartholomebury"/>
+            <column name="zipcode" value="76495-3109"/>
+            <column name="geo_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="address">
+            <column name="id" valueNumeric="10"/>
+            <column name="street" value="Kattie Turnpike"/>
+            <column name="suite" value="Suite 198"/>
+            <column name="city" value="Lebsackbury"/>
+            <column name="zipcode" value="31428-2261"/>
+            <column name="geo_id" valueNumeric="10"/>
+        </insert>
+        <!-- company -->
+        <insert tableName="company">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Romaguera-Crona"/>
+            <column name="catch_phrase" value="Multi-layered client-server neural-net"/>
+            <column name="bs" value="harness real-time e-markets"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Deckow-Crist"/>
+            <column name="catch_phrase" value="Proactive didactic contingency"/>
+            <column name="bs" value="synergize scalable supply-chains"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Romaguera-Jacobson"/>
+            <column name="catch_phrase" value="Face to face bifurcated interface"/>
+            <column name="bs" value="e-enable strategic applications"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Robel-Corkery"/>
+            <column name="catch_phrase" value="Multi-tiered zero tolerance productivity"/>
+            <column name="bs" value="transition cutting-edge web services"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Keebler LLC"/>
+            <column name="catch_phrase" value="User-centric fault-tolerant solution"/>
+            <column name="bs" value="revolutionize end-to-end systems"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Considine-Lockman"/>
+            <column name="catch_phrase" value="Synchronised bottom-line interface"/>
+            <column name="bs" value="e-enable innovative applications"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="7"/>
+            <column name="name" value="Johns Group"/>
+            <column name="catch_phrase" value="Configurable multimedia task-force"/>
+            <column name="bs" value="generate enterprise e-tailers"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="8"/>
+            <column name="name" value="Abernathy Group"/>
+            <column name="catch_phrase" value="Implemented secondary concept"/>
+            <column name="bs" value="e-enable extensible e-tailers"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="9"/>
+            <column name="name" value="Yost and Sons"/>
+            <column name="catch_phrase" value="Switchable contextually-based project"/>
+            <column name="bs" value="aggregate real-time technologies"/>
+        </insert>
+        <insert tableName="company">
+            <column name="id" valueNumeric="10"/>
+            <column name="name" value="Hoeger LLC"/>
+            <column name="catch_phrase" value="Centralized empowering task-force"/>
+            <column name="bs" value="target end-to-end models"/>
+        </insert>
+        <!-- app_user -->
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Leanne Graham"/>
+            <column name="username" value="Bret"/>
+            <column name="email" value="Sincere@april.biz"/>
+            <column name="address_id" valueNumeric="1"/>
+            <column name="phone" value="1-770-736-8031 x56442"/>
+            <column name="website" value="hildegard.org"/>
+            <column name="company_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Ervin Howell"/>
+            <column name="username" value="Antonette"/>
+            <column name="email" value="Shanna@melissa.tv"/>
+            <column name="address_id" valueNumeric="2"/>
+            <column name="phone" value="010-692-6593 x09125"/>
+            <column name="website" value="anastasia.net"/>
+            <column name="company_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Clementine Bauch"/>
+            <column name="username" value="Samantha"/>
+            <column name="email" value="Nathan@yesenia.net"/>
+            <column name="address_id" valueNumeric="3"/>
+            <column name="phone" value="1-463-123-4447"/>
+            <column name="website" value="ramiro.info"/>
+            <column name="company_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Patricia Lebsack"/>
+            <column name="username" value="Karianne"/>
+            <column name="email" value="Julianne.OConner@kory.org"/>
+            <column name="address_id" valueNumeric="4"/>
+            <column name="phone" value="493-170-9623 x156"/>
+            <column name="website" value="kale.biz"/>
+            <column name="company_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Chelsey Dietrich"/>
+            <column name="username" value="Kamren"/>
+            <column name="email" value="Lucio_Hettinger@annie.ca"/>
+            <column name="address_id" valueNumeric="5"/>
+            <column name="phone" value="(254)954-1289"/>
+            <column name="website" value="demarco.info"/>
+            <column name="company_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Mrs. Dennis Schulist"/>
+            <column name="username" value="Leopoldo_Corkery"/>
+            <column name="email" value="Karley_Dach@jasper.info"/>
+            <column name="address_id" valueNumeric="6"/>
+            <column name="phone" value="1-477-935-8478 x6430"/>
+            <column name="website" value="ola.org"/>
+            <column name="company_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="7"/>
+            <column name="name" value="Kurtis Weissnat"/>
+            <column name="username" value="Elwyn.Skiles"/>
+            <column name="email" value="Telly.Hoeger@billy.biz"/>
+            <column name="address_id" valueNumeric="7"/>
+            <column name="phone" value="210.067.6132"/>
+            <column name="website" value="elvis.io"/>
+            <column name="company_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="8"/>
+            <column name="name" value="Nicholas Runolfsdottir V"/>
+            <column name="username" value="Maxime_Nienow"/>
+            <column name="email" value="Sherwood@rosamond.me"/>
+            <column name="address_id" valueNumeric="8"/>
+            <column name="phone" value="586.493.6943 x140"/>
+            <column name="website" value="jacynthe.com"/>
+            <column name="company_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="9"/>
+            <column name="name" value="Glenna Reichert"/>
+            <column name="username" value="Delphine"/>
+            <column name="email" value="Chaim_McDermott@dana.io"/>
+            <column name="address_id" valueNumeric="9"/>
+            <column name="phone" value="(775)976-6794 x41206"/>
+            <column name="website" value="conrad.com"/>
+            <column name="company_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="app_user">
+            <column name="id" valueNumeric="10"/>
+            <column name="name" value="Clementina DuBuque"/>
+            <column name="username" value="Moriah.Stanton"/>
+            <column name="email" value="Rey.Padberg@karina.biz"/>
+            <column name="address_id" valueNumeric="10"/>
+            <column name="phone" value="024-648-3804"/>
+            <column name="website" value="ambrose.net"/>
+            <column name="company_id" valueNumeric="10"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="4-seed-authentication" author="copilot">
+        <insert tableName="authentication">
+            <column name="name" value="admin"/>
+            <column name="email" value="admin"/>
+            <column name="password_hash" value="$2a$10$vgBFKig4yz8hfjaTHF/P0uzx0CxS2Hs6MM7hLojIKLwsc9txHn99a"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
